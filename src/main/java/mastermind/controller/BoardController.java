@@ -27,6 +27,8 @@ public class BoardController extends AbstractController {
 
     @FXML GuessController guessController;
 
+    private DragHandler dragHandler = new DragHandler();
+
     @Override
     public void initLayout(Stage primaryStage) {
         try {
@@ -37,11 +39,9 @@ public class BoardController extends AbstractController {
             rootLayout.setMinHeight(100 * dispenserHeight);
             rootLayout.setMinWidth(100 * (dispenserWidth + guessWidth));
 
-
             Scene scene = new Scene(rootLayout);
             primaryStage.setScene(scene);
             primaryStage.show();
-
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -51,5 +51,8 @@ public class BoardController extends AbstractController {
     protected void initialize() {
         guessPane.setLayoutX(100 * dispenserWidth);
         guessPane.setLayoutY(100 * (dispenserHeight - 1));
+
+        dispenserController.setDragHandler(dragHandler);
+        guessController.setDragHandler(dragHandler);
     }
 }
