@@ -5,6 +5,8 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
+import mastermind.model.CodeWord;
+import mastermind.model.Guess;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +20,8 @@ public class GuessController {
     private Pane guessPane;
 
     private List<Circle> circles = new ArrayList<>(size);
+
+    private Guess guess = new Guess(CodeWord.empty(size), 0, 0);
 
     @FXML
     protected void initialize() {
@@ -37,7 +41,10 @@ public class GuessController {
             Optional<Circle> hitCircle = circles.stream()
                     .filter(c -> c.contains(c.sceneToLocal(event.getSceneX(), event.getSceneY())))
                     .findFirst();
-            hitCircle.ifPresent(c -> c.setFill(color));
+            hitCircle.ifPresent(c -> {
+                guess.getWord().setColor(circles.indexOf(c), color);
+                c.setFill(color);
+            });
         });
     }
 }

@@ -5,16 +5,24 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import mastermind.Main;
+import mastermind.model.Board;
+import mastermind.model.CodeWord;
 
 import java.io.IOException;
+import java.util.Arrays;
 
 public class BoardController extends AbstractController {
 
     private final int guessWidth = 4;
     private final int dispenserWidth = 1;
     private final int dispenserHeight = 8;
+
+    private Board board = new Board(new CodeWord(Arrays.asList(
+            Color.BLUE, Color.FUCHSIA, Color.CYAN, Color.ORANGE
+    )));
 
     @FXML
     private Pane guessPane;

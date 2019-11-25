@@ -1,7 +1,7 @@
 package mastermind.controller;
 
 import javafx.scene.input.MouseEvent;
-import javafx.scene.paint.Paint;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 
 import java.util.function.BiConsumer;
@@ -13,7 +13,7 @@ public class DragHandler {
 
     private Circle dragged = new Circle();
 
-    private BiConsumer<MouseEvent, Paint> onDropped = (e, c) -> {};
+    private BiConsumer<MouseEvent, Color> onDropped = (e, c) -> {};
 
     public DragHandler() {
         dragged.setVisible(false);
@@ -39,7 +39,7 @@ public class DragHandler {
         onDropped.accept(event, (Color) dragged.getFill());
     }
 
-    public void setOnDropped(BiConsumer<MouseEvent, Paint> onDropped) {
+    public void setOnDropped(BiConsumer<MouseEvent, Color> onDropped) {
         this.onDropped = onDropped;
     }
 
