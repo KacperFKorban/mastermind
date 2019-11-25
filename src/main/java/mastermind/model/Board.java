@@ -1,4 +1,4 @@
-package model;
+package mastermind.model;
 
 import java.util.List;
 

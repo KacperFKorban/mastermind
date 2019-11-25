@@ -1,4 +1,4 @@
-package model;
+package mastermind.model;
 
 import javafx.scene.paint.Color;
 
