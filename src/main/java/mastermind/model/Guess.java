@@ -1,4 +1,4 @@
-package model;
+package mastermind.model;
 public class Guess{
 
     private CodeWord word;

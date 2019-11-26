@@ -7,6 +7,7 @@ plugins {
 version '1.0-SNAPSHOT'
 
 sourceCompatibility = 1.8
+sourceSets.main.resources.srcDir 'src/main/java'
 
 repositories {
     mavenCentral()
@@ -19,5 +20,5 @@ dependencies {
 
 javafx {
     version = "13"
-    modules = [ 'javafx.controls' ]
+    modules = [ 'javafx.controls', 'javafx.fxml' ]
 }

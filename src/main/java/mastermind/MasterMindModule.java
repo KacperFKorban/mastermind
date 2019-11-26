@@ -1,7 +1,9 @@
+package mastermind;
+
 import com.google.inject.AbstractModule;
 import com.google.inject.name.Names;
-import controller.AbstractController;
-import controller.BoardController;
+import mastermind.controller.AbstractController;
+import mastermind.controller.BoardController;
 
 public class MasterMindModule extends AbstractModule {
     @Override

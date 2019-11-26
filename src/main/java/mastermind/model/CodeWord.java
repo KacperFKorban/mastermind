@@ -1,7 +1,8 @@
-package model;
+package mastermind.model;
 
 import javafx.scene.paint.Color;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class CodeWord {
@@ -9,6 +10,14 @@ public class CodeWord {
 
     public CodeWord(List<Color> colors) {
         this.colors = colors;
+    }
+
+    public static CodeWord empty(int size) {
+        ArrayList<Color> colors = new ArrayList<>();
+        for (int i = 0; i < size; i++) {
+            colors.add(Color.DIMGRAY);
+        }
+        return new CodeWord(colors);
     }
 
     int countCorrectlyPlacedColors(CodeWord word){
@@ -33,4 +42,7 @@ public class CodeWord {
         this.colors = colors;
     }
 
+    public void setColor(int index, Color color) {
+        colors.set(index, color);
+    }
 }

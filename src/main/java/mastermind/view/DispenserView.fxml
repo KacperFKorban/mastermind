@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+
+<AnchorPane id="dispenser-mastermind.view" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="mastermind.controller.DispenserController">
+  <Pane fx:id="dispenserPane" minHeight="0.0" minWidth="0.0" style="    -fx-border-color: black ;&#10;    -fx-border-width: 5 ;" />
+</AnchorPane>

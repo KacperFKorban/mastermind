@@ -1,11 +1,9 @@
+package mastermind;
+
 import com.google.inject.Guice;
 import com.google.inject.Injector;
-import com.google.inject.Module;
-import controller.AbstractController;
-import controller.BoardController;
+import mastermind.controller.AbstractController;
 import javafx.application.Application;
-import javafx.scene.Scene;
-import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
 import javax.inject.Inject;
