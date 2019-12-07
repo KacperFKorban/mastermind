@@ -39,13 +39,17 @@ public class CodeWord {
         int result=0;
         Set<Color> guess = new HashSet<>(this.getColors());
         for (Color solution: guess) {
-            long sameColours = word.getColors().stream()
-                    .filter(color -> color.equals(solution)).count();
-            long repeatedColours = this.getColors().stream()
-                    .filter(color -> color.equals(solution)).count();
+            long sameColours = countAmountOfTheSameColours(word,solution);
+            long repeatedColours = countAmountOfTheSameColours(this,solution);
             result += Math.min(sameColours, repeatedColours);
         }
         return result;
+    }
+
+    private long countAmountOfTheSameColours(CodeWord word, Color color){
+        return word.getColors().stream()
+                .filter(c -> c.equals(color))
+                .count();
     }
 
     int countIncorrectlyPlacedColors(CodeWord word){
