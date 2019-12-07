@@ -3,7 +3,9 @@ package mastermind.model;
 import javafx.scene.paint.Color;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class CodeWord {
     private List<Color> colors;
@@ -35,14 +37,13 @@ public class CodeWord {
 
     int countAmountOfCorrectColors(CodeWord word){
         int result=0;
-        List<Color> guess = new ArrayList<>(this.getColors());
+        Set<Color> guess = new HashSet<>(this.getColors());
         for (Color solution: guess) {
             long sameColours = word.getColors().stream()
                     .filter(color -> color.equals(solution)).count();
             long repeatedColours = this.getColors().stream()
                     .filter(color -> color.equals(solution)).count();
             result += Math.min(sameColours, repeatedColours);
-            guess.removeIf(color -> color.equals(solution));
         }
         return result;
     }
