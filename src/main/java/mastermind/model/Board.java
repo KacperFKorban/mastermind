@@ -22,9 +22,7 @@ public class Board{
 
     public boolean isGameOver(){
         int size = this.pastGuesses.size();
-        if(this.pastGuesses.get(size-1).getCorrectPlace() == size)
-            return true;
-        return false;
+        return this.pastGuesses.get(size-1).getCorrectPlace() == this.solution.getColors().size();
     }
 
     public List<Guess> getPastGuesses() {
