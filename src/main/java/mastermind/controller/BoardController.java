@@ -5,16 +5,27 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import mastermind.Main;
+import mastermind.model.Board;
+import mastermind.model.CodeWord;
+import mastermind.model.GameSession;
 
 import java.io.IOException;
+import java.util.Arrays;
 
 public class BoardController extends AbstractController {
 
     private final int guessWidth = 4;
     private final int dispenserWidth = 1;
     private final int dispenserHeight = 8;
+
+    private GameSession gameSession;
+
+    private Board board = new Board(new CodeWord(Arrays.asList(
+            Color.BLUE, Color.FUCHSIA, Color.CYAN, Color.ORANGE
+    )));
 
     @FXML
     private Pane guessPane;
@@ -25,13 +36,14 @@ public class BoardController extends AbstractController {
     @FXML
     private DispenserController dispenserController;
 
-    @FXML GuessController guessController;
+    @FXML
+    private GuessController guessController;
+
+    private DragHandler dragHandler = new DragHandler();
 
     @Override
     public void initLayout(Stage primaryStage) {
         try {
-            primaryStage.setTitle("MasterMind");
-
             FXMLLoader boardLoader = new FXMLLoader();
             boardLoader.setLocation(Main.class.getResource("view/BoardView.fxml"));
 
@@ -53,5 +65,16 @@ public class BoardController extends AbstractController {
     protected void initialize() {
         guessPane.setLayoutX(100 * dispenserWidth);
         guessPane.setLayoutY(100 * (dispenserHeight - 1));
+
+        dispenserController.setDragHandler(dragHandler);
+        guessController.setDragHandler(dragHandler);
+    }
+
+    public GameSession getGameSession() {
+        return gameSession;
+    }
+
+    public void setGameSession(GameSession gameSession) {
+        this.gameSession = gameSession;
     }
 }

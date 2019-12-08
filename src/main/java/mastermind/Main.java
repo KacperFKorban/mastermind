@@ -12,8 +12,11 @@ import javax.inject.Named;
 public class Main extends Application {
 
     private Stage primaryStage;
+
     @Inject
-    private AbstractController mainController;
+    @Named("main_menu_controller")
+    private AbstractController mainMenuController;
+
     @Inject
     @Named("title")
     private String title;
@@ -25,7 +28,7 @@ public class Main extends Application {
         injector.injectMembers(this);
 
         primaryStage.setTitle(title);
-        this.mainController.initLayout(stage);
+        this.mainMenuController.initLayout(stage);
     }
 
     public static void main(String[] args) {
