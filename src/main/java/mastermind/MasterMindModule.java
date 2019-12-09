@@ -14,8 +14,8 @@ import java.util.List;
 public class MasterMindModule extends AbstractModule {
     @Override
     protected void configure() {
-        bind(AbstractController.class).annotatedWith(Names.named("main_menu_controller")).to(MainMenuController.class);
-        bind(AbstractController.class).annotatedWith(Names.named("board_controller")).to(BoardController.class);
+        bind(MainMenuController.class).toInstance(new MainMenuController());
+        bind(BoardController.class).toInstance(new BoardController());
 
         bind(String.class).annotatedWith(Names.named("title")).toInstance("MasterAndrzej");
 

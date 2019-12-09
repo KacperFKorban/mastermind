@@ -58,8 +58,7 @@ public class MainMenuController extends AbstractController {
     private GameSession gameSession;
 
     @Inject
-    @Named("board_controller")
-    private AbstractController boardController;
+    private BoardController boardController;
 
     @Override
     public void initLayout(Stage stage) {
@@ -123,7 +122,7 @@ public class MainMenuController extends AbstractController {
     };
 
     private EventHandler<ActionEvent> startButtonHandler = (event) -> {
-        ((BoardController) boardController).setGameSession(gameSession);
+        boardController.setGameSession(gameSession);
         boardController.initLayout(getStage());
     };
 
