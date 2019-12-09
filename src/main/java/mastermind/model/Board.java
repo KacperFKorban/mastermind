@@ -10,6 +10,21 @@ public class Board{
         this.solution = solution;
     }
 
+    public boolean submitGuess(Guess actualGuess){
+        if(actualGuess.getWord().checkIfEveryColorIsChosen()){
+            actualGuess.setCorrectColors(actualGuess.getWord().countAmountOfCorrectColors(this.solution));
+            actualGuess.setCorrectPlaces(actualGuess.getWord().countCorrectlyPlacedColors(this.solution));
+            this.pastGuesses.add(actualGuess);
+            return true;
+        }
+        return false;
+    }
+
+    public boolean isGameOver(){
+        int size = this.pastGuesses.size();
+        return this.pastGuesses.get(size-1).getCorrectPlace() == this.solution.getColors().size();
+    }
+
     public List<Guess> getPastGuesses() {
         return pastGuesses;
     }
