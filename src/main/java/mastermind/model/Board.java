@@ -1,9 +1,10 @@
 package mastermind.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Board{
-    private List<Guess> pastGuesses;
+    private List<Guess> pastGuesses = new ArrayList<>();
     private CodeWord solution;
 
     public Board(CodeWord solution) {
@@ -12,8 +13,10 @@ public class Board{
 
     public boolean submitGuess(Guess actualGuess){
         if(actualGuess.getWord().checkIfEveryColorIsChosen()){
-            actualGuess.setCorrectColors(actualGuess.getWord().countAmountOfCorrectColors(this.solution));
-            actualGuess.setCorrectPlaces(actualGuess.getWord().countCorrectlyPlacedColors(this.solution));
+            int correctColors = actualGuess.getWord().countAmountOfCorrectColors(solution);
+            int correctPlaces = actualGuess.getWord().countCorrectlyPlacedColors(solution);
+            actualGuess.setCorrectColors(correctColors - correctPlaces);
+            actualGuess.setCorrectPlaces(correctPlaces);
             this.pastGuesses.add(actualGuess);
             return true;
         }
