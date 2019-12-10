@@ -12,8 +12,10 @@ import javax.inject.Named;
 public class Main extends Application {
 
     private Stage primaryStage;
+
     @Inject
     private AbstractController mainController;
+
     @Inject
     @Named("title")
     private String title;
