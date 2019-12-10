@@ -3,6 +3,15 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="guess-mastermind.view" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="mastermind.controller.GuessController">
+<?import javafx.scene.control.Button?>
+
+<HBox id="guess-mastermind.view"
+      xmlns:fx="http://javafx.com/fxml/1"
+      xmlns="http://javafx.com/javafx/2.2"
+      fx:controller="mastermind.controller.GuessController"
+      alignment="CENTER">
   <Pane fx:id="guessPane" minHeight="0.0" minWidth="0.0" style="    -fx-border-color: black ;&#10;    -fx-border-width: 5 ;" />
-</AnchorPane>
+  <Button fx:id="submitButton"
+          text="Submit"
+          onAction="#handleSubmit"/>
+</HBox>

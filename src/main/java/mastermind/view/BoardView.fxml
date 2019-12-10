@@ -2,10 +2,27 @@
 
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+
+<?import javafx.scene.control.ScrollPane?>
 <AnchorPane xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="mastermind.controller.BoardController">
-  <Pane fx:id="guessPane">
+  <ScrollPane AnchorPane.leftAnchor="100.0"
+              AnchorPane.rightAnchor="0.0"
+              AnchorPane.topAnchor="0.0"
+              AnchorPane.bottomAnchor="100.0"
+              fitToHeight="true"
+              fitToWidth="true"
+              style="-fx-background-color:transparent;">
+    <AnchorPane>
+      <VBox fx:id="pastGuesses"
+            AnchorPane.bottomAnchor="0.0"/>
+    </AnchorPane>
+  </ScrollPane>
+  <Pane fx:id="guessPane"
+        AnchorPane.bottomAnchor="0.0">
     <fx:include fx:id="guess" source="GuessView.fxml" />
   </Pane>
+  <!-- Dispenser pane has to be last, so that dragged pins are drawn above everything else -->
   <Pane fx:id="dispenserPane">
     <fx:include fx:id="dispenser" source="DispenserView.fxml" />
   </Pane>

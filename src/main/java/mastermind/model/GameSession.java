@@ -45,4 +45,12 @@ public class GameSession {
     public int getMaxGuessQuantity() {
         return maxGuessQuantity;
     }
+
+    public int getDispenserWidth() {
+        return 1;
+    }
+
+    public int getDispenserHeight() {
+        return coloursQuantity;
+    }
 }

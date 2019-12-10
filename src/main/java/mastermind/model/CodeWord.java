@@ -1,11 +1,9 @@
 package mastermind.model;
 
 import javafx.scene.paint.Color;
+import mastermind.controller.DispenserController;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class CodeWord {
     private List<Color> colors;
@@ -18,6 +16,16 @@ public class CodeWord {
         ArrayList<Color> colors = new ArrayList<>();
         for (int i = 0; i < size; i++) {
             colors.add(Color.DIMGRAY);
+        }
+        return new CodeWord(colors);
+    }
+
+    public static CodeWord random(GameSession gameSession) {
+        Random random = new Random();
+        List<Color> colors = new ArrayList<>(gameSession.getGuessWordLength());
+        for (int i = 0; i < gameSession.getGuessWordLength(); i++) {
+            int color = random.nextInt(gameSession.getColoursQuantity());
+            colors.add(DispenserController.COLORS.get(color));
         }
         return new CodeWord(colors);
     }
