@@ -1,5 +1,6 @@
 package mastermind.controller;
 
+import com.google.inject.Singleton;
 import javafx.fxml.FXML;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
@@ -9,7 +10,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-
+@Singleton
 public class DispenserController {
 
     @FXML

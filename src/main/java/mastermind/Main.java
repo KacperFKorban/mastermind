@@ -14,8 +14,7 @@ public class Main extends Application {
     private Stage primaryStage;
 
     @Inject
-    @Named("main_menu_controller")
-    private AbstractController mainMenuController;
+    private AbstractController mainController;
 
     @Inject
     @Named("title")
@@ -28,7 +27,7 @@ public class Main extends Application {
         injector.injectMembers(this);
 
         primaryStage.setTitle(title);
-        this.mainMenuController.initLayout(stage);
+        this.mainController.initLayout(stage);
     }
 
     public static void main(String[] args) {

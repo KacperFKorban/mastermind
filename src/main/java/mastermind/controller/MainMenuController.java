@@ -2,6 +2,7 @@ package mastermind.controller;
 
 import com.google.inject.Guice;
 import com.google.inject.Injector;
+import com.google.inject.Singleton;
 import javafx.beans.value.ChangeListener;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
@@ -23,6 +24,7 @@ import javax.inject.Named;
 import java.io.IOException;
 import java.util.List;
 
+@Singleton
 public class MainMenuController extends AbstractController {
 
     private Stage stage;
@@ -60,17 +62,20 @@ public class MainMenuController extends AbstractController {
     @Inject
     private BoardController boardController;
 
+    @Inject
+    private FxmlLoaderFactory fxmlLoaderFactory;
+
     @Override
     public void initLayout(Stage stage) {
 
 
         try {
 
-            FXMLLoader mainMenuLoader = new FXMLLoader();
+            FXMLLoader mainMenuLoader = fxmlLoaderFactory.createFxmlLoader();
             mainMenuLoader.setLocation(Main.class.getResource("view/MainMenuView.fxml"));
             AnchorPane rootLayout = (AnchorPane) mainMenuLoader.load();
 
-            ((MainMenuController) mainMenuLoader.getController()).setStage(stage);
+            this.stage = stage;
             Scene scene = new Scene(rootLayout);
 
             stage.setScene(scene);
@@ -123,15 +128,7 @@ public class MainMenuController extends AbstractController {
 
     private EventHandler<ActionEvent> startButtonHandler = (event) -> {
         boardController.setGameSession(gameSession);
-        boardController.initLayout(getStage());
+        boardController.initLayout(stage);
     };
-
-    public Stage getStage() {
-        return stage;
-    }
-
-    public void setStage(Stage stage) {
-        this.stage = stage;
-    }
 
 }

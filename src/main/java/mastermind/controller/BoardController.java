@@ -1,5 +1,7 @@
 package mastermind.controller;
 
+import com.google.inject.Inject;
+import com.google.inject.Singleton;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -15,6 +17,7 @@ import mastermind.model.GameSession;
 import java.io.IOException;
 import java.util.Arrays;
 
+@Singleton
 public class BoardController extends AbstractController {
 
     private final int guessWidth = 4;
@@ -41,10 +44,13 @@ public class BoardController extends AbstractController {
 
     private DragHandler dragHandler = new DragHandler();
 
+    @Inject
+    private FxmlLoaderFactory fxmlLoaderFactory;
+
     @Override
     public void initLayout(Stage primaryStage) {
         try {
-            FXMLLoader boardLoader = new FXMLLoader();
+            FXMLLoader boardLoader = fxmlLoaderFactory.createFxmlLoader();
             boardLoader.setLocation(Main.class.getResource("view/BoardView.fxml"));
 
             AnchorPane rootLayout = (AnchorPane) boardLoader.load();
