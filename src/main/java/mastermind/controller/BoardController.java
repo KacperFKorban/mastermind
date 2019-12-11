@@ -11,7 +11,6 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import mastermind.Main;
 import mastermind.model.Board;
@@ -20,16 +19,15 @@ import mastermind.model.GameSession;
 import mastermind.model.Guess;
 
 import java.io.IOException;
-import java.util.Arrays;
 
 @Singleton
 public class BoardController extends AbstractController {
 
-    private GameSession gameSession = new GameSession("test", 4, 8, -1);
+    private GameSession gameSession;
 
-    private Board board = new Board(new CodeWord(Arrays.asList(
-            Color.BLUE, Color.FUCHSIA, Color.CYAN, Color.ORANGE
-    )));
+    private Board board;
+
+    private Stage stage;
 
     @FXML
     private Pane guessPane;
@@ -51,9 +49,13 @@ public class BoardController extends AbstractController {
     @Inject
     private FxmlLoaderFactory fxmlLoaderFactory;
 
+    @Inject
+    private ScoreController scoreController;
+
     @Override
     public void initLayout(Stage primaryStage) {
         try {
+            this.board = new Board(CodeWord.random(gameSession));
             FXMLLoader boardLoader = fxmlLoaderFactory.createFxmlLoader();
             boardLoader.setLocation(Main.class.getResource("view/BoardView.fxml"));
 
@@ -61,7 +63,7 @@ public class BoardController extends AbstractController {
             rootLayout.setMinHeight(100 * gameSession.getDispenserHeight());
             rootLayout.setMinWidth(100 * (gameSession.getDispenserWidth() + gameSession.getGuessWordLength()));
 
-
+            this.stage = primaryStage;
             Scene scene = new Scene(rootLayout);
             primaryStage.setScene(scene);
             primaryStage.show();
@@ -101,6 +103,12 @@ public class BoardController extends AbstractController {
     private void guessSubmitted() {
         if (board.submitGuess(guessController.getGuess())) {
             updatePastGuesses();
+            if (guessController.getGuess().getCorrectPlace() == gameSession.getGuessWordLength() || pastGuesses.getChildren().size() == gameSession.getMaxGuessQuantity()) {
+                gameSession.setGuessed(guessController.getGuess().getCorrectPlace() == gameSession.getGuessWordLength());
+                gameSession.setGuessesMade(pastGuesses.getChildren().size());
+                scoreController.setGameSession(gameSession);
+                scoreController.initLayout(stage);
+            }
             guessController.setGuess(new Guess(CodeWord.empty(gameSession.getGuessWordLength()), 0, 0));
         }
     }

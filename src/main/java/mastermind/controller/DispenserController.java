@@ -21,7 +21,7 @@ public class DispenserController {
     private int width = 1;
 
     public static final ArrayList<Color> COLORS = new ArrayList<>(
-            Arrays.asList(Color.BLUE, Color.FUCHSIA, Color.CYAN, Color.ORANGE, Color.PERU, Color.GREEN, Color.YELLOW, Color.RED)
+            Arrays.asList(Color.BLUE, Color.FUCHSIA, Color.CYAN, Color.ORANGE, Color.PERU, Color.GREEN, Color.YELLOW, Color.RED, Color.DARKMAGENTA, Color.SIENNA)
     );
 
     private List<Circle> circles = new ArrayList<>();
