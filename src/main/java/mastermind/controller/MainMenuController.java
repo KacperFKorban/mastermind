@@ -67,10 +67,7 @@ public class MainMenuController extends AbstractController {
 
     @Override
     public void initLayout(Stage stage) {
-
-
         try {
-
             FXMLLoader mainMenuLoader = fxmlLoaderFactory.createFxmlLoader();
             mainMenuLoader.setLocation(Main.class.getResource("view/MainMenuView.fxml"));
             AnchorPane rootLayout = (AnchorPane) mainMenuLoader.load();
@@ -80,7 +77,6 @@ public class MainMenuController extends AbstractController {
 
             stage.setScene(scene);
             stage.show();
-
         } catch (IOException e) {
             e.printStackTrace();
         }

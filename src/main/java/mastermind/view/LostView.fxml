@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.text.Text?>
+<?import javafx.scene.image.Image?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="400.0" style="-fx-background-color: #ffffff" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="mastermind.controller.ScoreController">
+    <children>
+        <ImageView layoutX="100.0" layoutY="50.0">
+            <Image requestedWidth="200.0" requestedHeight="200.0" url="http://pixelartmaker.com/art/799de39f3541189.png"/>
+        </ImageView>
+        <Text text="Powodzenia następnym razem" layoutX="75.0" layoutY="300.0" strokeWidth="100.0" textAlignment="CENTER"/>
+    </children>
+</AnchorPane>

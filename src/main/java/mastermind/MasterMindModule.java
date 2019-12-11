@@ -20,8 +20,8 @@ public class MasterMindModule extends AbstractModule {
 
 
         bind(new TypeLiteral<List<Integer>>(){}).annotatedWith(Names.named("length_list")).toInstance(Arrays.asList(3, 4, 5));
-        bind(new TypeLiteral<List<Integer>>(){}).annotatedWith(Names.named("colours_list")).toInstance(Arrays.asList(6, 7, 8, 9, 10, 11, 12));
-        bind(new TypeLiteral<List<Integer>>(){}).annotatedWith(Names.named("max_guess_list")).toInstance(Arrays.asList(5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17));
-        bind(GameSession.class).toInstance(new GameSession("Tu wpisz nazwe gracza", 4, 8, 10));
+        bind(new TypeLiteral<List<Integer>>(){}).annotatedWith(Names.named("colours_list")).toInstance(Arrays.asList(6, 7, 8, 9, 10));
+        bind(new TypeLiteral<List<Integer>>(){}).annotatedWith(Names.named("max_guess_list")).toInstance(Arrays.asList(4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16));
+        bind(GameSession.class).toInstance(new GameSession("", 4, 8, 10));
     }
 }
