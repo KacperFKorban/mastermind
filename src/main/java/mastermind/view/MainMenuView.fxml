@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="400.0" style="-fx-background-color: #ffffff" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="mastermind.controller.MainMenuController">
+  <children>
+    <ComboBox fx:id="lengthComboBox" layoutX="161.0" layoutY="245.0" />
+    <ComboBox fx:id="coloursComboBox" layoutX="161.0" layoutY="353.0"/>
+    <ComboBox fx:id="maxGuessComboBox" layoutX="161.0" layoutY="462.0"/>
+    <Button fx:id="startButton" layoutX="173.0" layoutY="529.0" mnemonicParsing="false" text="Start" />
+    <Label layoutX="51.0" layoutY="432.0" text="Choose maximal quantity of possible guesses" />
+    <Label layoutX="113.0" layoutY="326.0" text="Choose quantity of colours" />
+    <Label layoutX="105.0" layoutY="217.0" text="Choose word to guess length" />
+    <Label alignment="CENTER" contentDisplay="CENTER" layoutX="0.0" layoutY="0.0" prefHeight="76.0" prefWidth="400.0" text="Master Mind" textAlignment="CENTER" textOverrun="ELLIPSIS" underline="false" wrapText="false">
+      <font>
+        <Font name="FreeSans" size="30.0" />
+      </font>
+    </Label>
+    <Label layoutX="145.0" layoutY="113.0" text="Enter your name" />
+    <TextField fx:id="username" layoutX="100.0" layoutY="138.0" prefWidth="200.0" promptText="Wpisz nazwę użytkownika"/>
+  </children>
+</AnchorPane>

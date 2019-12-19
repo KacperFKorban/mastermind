@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<HBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="mastermind.controller.PastGuessController"
+      style="    -fx-border-color: black ;&#10;    -fx-border-width: 5 ;">
+    <Pane fx:id="wordPane" />
+    <Pane fx:id="hintPane" />
+</HBox>
