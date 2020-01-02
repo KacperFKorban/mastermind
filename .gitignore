@@ -1,5 +1,6 @@
 *.class
 *.jar
+*.sqlite
 .gradle
 .idea
 build
