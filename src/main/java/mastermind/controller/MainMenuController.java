@@ -12,7 +12,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import mastermind.Main;
@@ -30,7 +29,7 @@ public class MainMenuController extends AbstractController {
     private Stage stage;
 
     @FXML
-    private TextField username;
+    private ComboBox usernamesComboBox;
 
     @FXML
     private ComboBox lengthComboBox;
@@ -42,7 +41,14 @@ public class MainMenuController extends AbstractController {
     private ComboBox maxGuessComboBox;
 
     @FXML
+    private Button addNewGamerButton;
+
+    @FXML
     private Button startButton;
+
+    @Inject
+    @Named("user_names")
+    private List<String> usernamesList;
 
     @Inject
     @Named("length_list")
@@ -64,6 +70,9 @@ public class MainMenuController extends AbstractController {
 
     @Inject
     private FxmlLoaderFactory fxmlLoaderFactory;
+
+    @Inject
+    private AddNewGamerController addNewGamerController;
 
     @Override
     public void initLayout(Stage stage) {
@@ -88,8 +97,9 @@ public class MainMenuController extends AbstractController {
         Injector injector = Guice.createInjector(new MasterMindModule());
         injector.injectMembers(this);
 
-        username.textProperty().setValue(gameSession.getName());
-        username.textProperty().addListener(usernameHandler);
+        usernamesComboBox.setItems(FXCollections.observableArrayList(usernamesList));
+        usernamesComboBox.getSelectionModel().select(usernamesList.indexOf(gameSession.getName()));
+        usernamesComboBox.setOnAction(usernamesComboBoxHandler);
 
         lengthComboBox.setItems(FXCollections.observableArrayList(lengthList));
         lengthComboBox.getSelectionModel().select(lengthList.indexOf(gameSession.getGuessWordLength()));
@@ -103,11 +113,12 @@ public class MainMenuController extends AbstractController {
         maxGuessComboBox.getSelectionModel().select(maxGuessList.indexOf(gameSession.getMaxGuessQuantity()));
         maxGuessComboBox.setOnAction(maxGuessComboBoxHandler);
 
+        addNewGamerButton.setOnAction(addNewGamerHandler);
         startButton.setOnAction(startButtonHandler);
     }
 
     private ChangeListener<String> usernameHandler = (event, old, newOne) -> {
-        gameSession.setName(username.getText());
+        gameSession.setName((String) usernamesComboBox.getValue());
     };
 
     private EventHandler<ActionEvent> lengthComboBoxHandler = (event) -> {
@@ -125,6 +136,14 @@ public class MainMenuController extends AbstractController {
     private EventHandler<ActionEvent> startButtonHandler = (event) -> {
         boardController.setGameSession(gameSession);
         boardController.initLayout(stage);
+    };
+
+    private EventHandler<ActionEvent> usernamesComboBoxHandler = (event) -> {
+        gameSession.setName((String) usernamesComboBox.getValue());
+    };
+
+    private EventHandler<ActionEvent> addNewGamerHandler = (event) -> {
+        addNewGamerController.initLayout(stage);
     };
 
 }
