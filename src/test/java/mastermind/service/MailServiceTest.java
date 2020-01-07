@@ -1,12 +1,14 @@
 package mastermind.service;
 
 
+import org.junit.Test;
+
 public class MailServiceTest {
 
     @Test
-    public void evaluatesExpression() {
-        Calculator calculator = new Calculator();
-        int sum = calculator.evaluate("1+2+3");
-        assertEquals(6, sum);
+    public void sendDummyMail() {
+        MailService mailService = new MailService();
+        mailService.sendMail("tuwpisznazwemaila@gmail.com", "dummy", -1);
+        assert(true);
     }
 }
