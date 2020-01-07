@@ -12,9 +12,11 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import mastermind.Main;
 import javafx.scene.control.Button;
+import mastermind.db.SqliteDb;
 
 import javax.inject.Singleton;
 import java.io.IOException;
+import java.sql.SQLException;
 
 @Singleton
 public class AddNewGamerController extends AbstractController {
@@ -33,6 +35,13 @@ public class AddNewGamerController extends AbstractController {
     @Inject
     private FxmlLoaderFactory fxmlLoaderFactory;
 
+    @Inject
+    private SqliteDb sqliteDb;
+
+    private String newGamerName;
+
+    private String newGamerEMail;
+
     @Override
     public void initLayout(Stage parentStage) {
         try {
@@ -45,6 +54,7 @@ public class AddNewGamerController extends AbstractController {
             Scene scene = new Scene(rootLayout);
             this.stage.setScene(scene);
             this.stage.showAndWait();
+
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -59,15 +69,19 @@ public class AddNewGamerController extends AbstractController {
     }
 
     private ChangeListener<String> usernameHandler = (event, old, newOne) -> {
-        // TO DO: validate username
+        this.newGamerName = username.getText();
     };
 
     private ChangeListener<String> emailHandler = (event, old, newOne) -> {
-        // TO DO: add email to database
+        this.newGamerEMail = email.getText();
     };
 
     private EventHandler<ActionEvent> addNewGamerButtonHandler = (event) -> {
-        //TO DO: add gamer to database and actualize combobox
+        try {
+            sqliteDb.addGamer(this.newGamerName,this.newGamerEMail);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         stage.hide();
     };
 

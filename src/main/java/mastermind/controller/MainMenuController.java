@@ -16,11 +16,13 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import mastermind.Main;
 import mastermind.MasterMindModule;
+import mastermind.db.SqliteDb;
 import mastermind.model.GameSession;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.List;
 
 @Singleton
@@ -74,6 +76,9 @@ public class MainMenuController extends AbstractController {
     @Inject
     private AddNewGamerController addNewGamerController;
 
+    @Inject
+    private SqliteDb sqliteDb;
+
     @Override
     public void initLayout(Stage stage) {
         try {
@@ -92,12 +97,12 @@ public class MainMenuController extends AbstractController {
     }
 
     @FXML
-    protected void initialize() {
+    protected void initialize() throws SQLException {
 
         Injector injector = Guice.createInjector(new MasterMindModule());
         injector.injectMembers(this);
 
-        usernamesComboBox.setItems(FXCollections.observableArrayList(usernamesList));
+        usernamesComboBox.setItems(FXCollections.observableArrayList(sqliteDb.getGamers()));
         usernamesComboBox.getSelectionModel().select(usernamesList.indexOf(gameSession.getName()));
         usernamesComboBox.setOnAction(usernamesComboBoxHandler);
 
@@ -144,6 +149,11 @@ public class MainMenuController extends AbstractController {
 
     private EventHandler<ActionEvent> addNewGamerHandler = (event) -> {
         addNewGamerController.initLayout(stage);
+        try {
+            usernamesComboBox.setItems(FXCollections.observableArrayList(sqliteDb.getGamers()));
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     };
 
 }
