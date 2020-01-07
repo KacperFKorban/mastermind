@@ -23,6 +23,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 @Singleton
@@ -48,9 +49,7 @@ public class MainMenuController extends AbstractController {
     @FXML
     private Button startButton;
 
-    @Inject
-    @Named("user_names")
-    private List<String> usernamesList;
+    private List<String> usernamesList = new ArrayList<>();
 
     @Inject
     @Named("length_list")
@@ -102,6 +101,8 @@ public class MainMenuController extends AbstractController {
         Injector injector = Guice.createInjector(new MasterMindModule());
         injector.injectMembers(this);
 
+        startButton.disableProperty().setValue(true);
+
         usernamesComboBox.setItems(FXCollections.observableArrayList(sqliteDb.getGamers()));
         usernamesComboBox.getSelectionModel().select(usernamesList.indexOf(gameSession.getName()));
         usernamesComboBox.setOnAction(usernamesComboBoxHandler);
@@ -145,6 +146,7 @@ public class MainMenuController extends AbstractController {
 
     private EventHandler<ActionEvent> usernamesComboBoxHandler = (event) -> {
         gameSession.setName((String) usernamesComboBox.getValue());
+        startButton.disableProperty().setValue(false);
     };
 
     private EventHandler<ActionEvent> addNewGamerHandler = (event) -> {

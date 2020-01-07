@@ -12,13 +12,14 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import javafx.util.Pair;
 import mastermind.Main;
-import mastermind.model.Board;
-import mastermind.model.CodeWord;
-import mastermind.model.GameSession;
-import mastermind.model.Guess;
+import mastermind.db.SqliteDb;
+import mastermind.model.*;
+import mastermind.service.MailService;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 @Singleton
 public class BoardController extends AbstractController {
@@ -47,6 +48,12 @@ public class BoardController extends AbstractController {
     private DragHandler dragHandler = new DragHandler();
 
     @Inject
+    private SqliteDb sqliteDb;
+
+    @Inject
+    private MailService mailService;
+
+    @Inject
     private FxmlLoaderFactory fxmlLoaderFactory;
 
     @Inject
@@ -55,7 +62,9 @@ public class BoardController extends AbstractController {
     @Override
     public void initLayout(Stage primaryStage) {
         try {
-            this.board = new Board(CodeWord.random(gameSession));
+            CodeWord solution = CodeWord.random(gameSession);
+            this.board = new Board(solution);
+            gameSession.setSolution(solution);
             FXMLLoader boardLoader = fxmlLoaderFactory.createFxmlLoader();
             boardLoader.setLocation(Main.class.getResource("view/BoardView.fxml"));
 
@@ -80,16 +89,10 @@ public class BoardController extends AbstractController {
         dispenserController.setGameSession(gameSession);
         guessController.setGameSession(gameSession);
 
-        initBoard();
-
         dispenserController.setDragHandler(dragHandler);
         guessController.setDragHandler(dragHandler);
 
         guessController.setOnSubmit(this::guessSubmitted);
-    }
-
-    private void initBoard() {
-        board.setSolution(CodeWord.random(gameSession));
     }
 
     public GameSession getGameSession() {
@@ -107,6 +110,18 @@ public class BoardController extends AbstractController {
                 gameSession.setGuessed(guessController.getGuess().getCorrectPlace() == gameSession.getGuessWordLength());
                 gameSession.setGuessesMade(pastGuesses.getChildren().size());
                 scoreController.setGameSession(gameSession);
+                if(gameSession.isGuessed()) {
+                    try {
+                        Pair<User, Integer> best = sqliteDb.currentBest();
+                        Integer score = gameSession.getScore();
+                        String name = gameSession.getName();
+                        if(score > best.getValue() && !name.equals(best.getKey().getName())) {
+                            mailService.sendMail(best.getKey().getEmail(), name, score);
+                        }
+                        sqliteDb.addScore(gameSession.getName(), score);
+                        gameSession.setRanking(sqliteDb.getRanking());
+                    } catch (SQLException e) { e.printStackTrace(); }
+                }
                 scoreController.initLayout(stage);
             }
             guessController.setGuess(new Guess(CodeWord.empty(gameSession.getGuessWordLength()), 0, 0));

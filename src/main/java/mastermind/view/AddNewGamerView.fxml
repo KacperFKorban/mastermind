@@ -17,7 +17,7 @@
             </font>
         </Label>
         <Label layoutX="50.0" layoutY="80.0" text="Enter name" />
-        <TextField fx:id="username" layoutX="50.0" layoutY="100.0" prefWidth="200.0" promptText="Nazwa"/>
+        <TextField fx:id="username" layoutX="50.0" layoutY="100.0" prefWidth="200.0" promptText="Name"/>
         <Label layoutX="50.0" layoutY="130.0" text="Enter email" />
         <TextField fx:id="email" layoutX="50.0" layoutY="150.0" prefWidth="200.0" promptText="E-mail"/>
     </children>

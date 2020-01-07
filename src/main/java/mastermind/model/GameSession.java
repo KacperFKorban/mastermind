@@ -1,5 +1,9 @@
 package mastermind.model;
 
+import javafx.util.Pair;
+
+import java.util.List;
+
 public class GameSession {
 
     private String name;
@@ -8,6 +12,8 @@ public class GameSession {
     private int maxGuessQuantity;
     private boolean guessed;
     private int guessesMade;
+    private CodeWord solution;
+    private List<Pair<String, Integer>> ranking;
 
     public GameSession(String name, int guessWordLength, int coloursQuantity, int maxGuessQuantity) {
         this.name = name;
@@ -70,6 +76,22 @@ public class GameSession {
 
     public void setGuessesMade(int guessesMade) {
         this.guessesMade = guessesMade;
+    }
+
+    public CodeWord getSolution() {
+        return solution;
+    }
+
+    public void setSolution(CodeWord solution) {
+        this.solution = solution;
+    }
+
+    public List<Pair<String, Integer>> getRanking() {
+        return ranking;
+    }
+
+    public void setRanking(List<Pair<String, Integer>> ranking) {
+        this.ranking = ranking;
     }
 
     public Integer getScore() {
