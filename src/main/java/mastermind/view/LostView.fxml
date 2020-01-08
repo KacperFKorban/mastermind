@@ -10,6 +10,8 @@
         <ImageView layoutX="100.0" layoutY="50.0">
             <Image requestedWidth="200.0" requestedHeight="200.0" url="http://pixelartmaker.com/art/799de39f3541189.png"/>
         </ImageView>
-        <Text text="Powodzenia następnym razem" layoutX="75.0" layoutY="300.0" strokeWidth="100.0" textAlignment="CENTER"/>
+        <Text text="Better luck next time" layoutX="75.0" layoutY="300.0" strokeWidth="100.0" textAlignment="CENTER"/>
+        <Text text="Correct answer:" layoutX="75.0" layoutY="350.0" strokeWidth="100.0" textAlignment="CENTER"/>
+        <Pane fx:id="wordPane" layoutX="20.0" layoutY="350.0"/>
     </children>
 </AnchorPane>
