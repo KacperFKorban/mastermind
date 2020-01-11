@@ -117,12 +117,17 @@ public class BoardController extends AbstractController {
                 scoreController.setGameSession(gameSession);
                 if(gameSession.isGuessed()) {
                     try {
-                        Pair<User, Integer> best = sqliteDb.currentBest();
-                        Integer score = gameSession.getScore();
+                        int score = gameSession.getScore();
                         String name = gameSession.getName();
-                        if(score > best.getValue() && !name.equals(best.getKey().getName())) {
-                            mailService.sendMail(best.getKey().getEmail(), name, score);
+
+                        Pair<User, Integer> best = sqliteDb.currentBest();
+                        if (best != null) {
+                            User user = best.getKey();
+                            if(score > best.getValue() && !name.equals(user.getName())) {
+                                mailService.sendMail(user.getEmail(), name, score);
                         }
+                        }
+
                         sqliteDb.addScore(gameSession.getName(), score);
                         gameSession.setRanking(sqliteDb.getRanking());
                     } catch (SQLException e) { e.printStackTrace(); }
