@@ -2,6 +2,7 @@ package mastermind.model;
 
 import javafx.util.Pair;
 
+import java.awt.*;
 import java.util.List;
 
 public class GameSession {
@@ -15,10 +16,12 @@ public class GameSession {
     private CodeWord solution;
     private List<Pair<String, Integer>> ranking;
 
+    private int dispenserWidth;
+
     public GameSession(String name, int guessWordLength, int coloursQuantity, int maxGuessQuantity) {
         this.name = name;
         this.guessWordLength = guessWordLength;
-        this.coloursQuantity = coloursQuantity;
+        setColoursQuantity(coloursQuantity);
         this.maxGuessQuantity = maxGuessQuantity;
     }
 
@@ -32,6 +35,14 @@ public class GameSession {
 
     public void setColoursQuantity(int coloursQuantity) {
         this.coloursQuantity = coloursQuantity;
+
+        int maxHeight = 400;
+        if (coloursQuantity > maxHeight / 100) {
+            int h = maxHeight / 100;
+            dispenserWidth = (coloursQuantity + h - 1) / h; // Round up
+        } else {
+            dispenserWidth = 1;
+        }
     }
 
     public void setMaxGuessQuantity(int maxGuessQuantity) {
@@ -55,11 +66,11 @@ public class GameSession {
     }
 
     public int getDispenserWidth() {
-        return 1;
+        return dispenserWidth;
     }
 
     public int getDispenserHeight() {
-        return coloursQuantity;
+        return (coloursQuantity + dispenserWidth - 1) / dispenserWidth;
     }
 
     public boolean isGuessed() {

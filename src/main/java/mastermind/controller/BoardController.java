@@ -7,6 +7,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -38,6 +39,9 @@ public class BoardController extends AbstractController {
 
     @FXML
     private VBox pastGuesses;
+
+    @FXML
+    private ScrollPane pastGuessesScrollPane;
 
     @FXML
     private DispenserController dispenserController;
@@ -85,6 +89,7 @@ public class BoardController extends AbstractController {
     @FXML
     protected void initialize() {
         guessPane.setLayoutX(100 * gameSession.getDispenserWidth());
+        AnchorPane.setLeftAnchor(pastGuessesScrollPane, 100.0 * gameSession.getDispenserWidth());
 
         dispenserController.setGameSession(gameSession);
         guessController.setGameSession(gameSession);
