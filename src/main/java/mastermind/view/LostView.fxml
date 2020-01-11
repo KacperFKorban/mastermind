@@ -4,6 +4,7 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.text.Text?>
 <?import javafx.scene.image.Image?>
+<?import javafx.scene.control.Button?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="400.0" style="-fx-background-color: #ffffff" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="mastermind.controller.ScoreController">
     <children>
@@ -13,5 +14,6 @@
         <Text text="Better luck next time" layoutX="75.0" layoutY="300.0" strokeWidth="100.0" textAlignment="CENTER"/>
         <Text text="Correct answer:" layoutX="75.0" layoutY="350.0" strokeWidth="100.0" textAlignment="CENTER"/>
         <Pane fx:id="wordPane" layoutX="20.0" layoutY="350.0"/>
+        <Button text="Restart" layoutX="20.0" layoutY="425.0" onAction="#restartButtonClicked"/>
     </children>
 </AnchorPane>

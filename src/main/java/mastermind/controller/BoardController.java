@@ -73,7 +73,8 @@ public class BoardController extends AbstractController {
             boardLoader.setLocation(Main.class.getResource("view/BoardView.fxml"));
 
             AnchorPane rootLayout = (AnchorPane) boardLoader.load();
-            rootLayout.setMinHeight(100 * gameSession.getDispenserHeight());
+            int minHeight = Math.max(100 * gameSession.getDispenserHeight(), 600);
+            rootLayout.setMinHeight(minHeight);
             rootLayout.setMinWidth(100 * (gameSession.getDispenserWidth() + gameSession.getGuessWordLength()));
 
             this.stage = primaryStage;
