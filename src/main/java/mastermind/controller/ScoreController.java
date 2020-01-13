@@ -5,6 +5,7 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -31,6 +32,9 @@ public class ScoreController extends AbstractController {
     @Inject
     private FxmlLoaderFactory fxmlLoaderFactory;
 
+    @Inject
+    private MainMenuController mainMenuController;
+
     @FXML
     private TableView<Pair<String, Integer>> rankingTable;
 
@@ -45,6 +49,8 @@ public class ScoreController extends AbstractController {
 
     @FXML
     private Pane wordPane;
+
+    private Stage stage;
 
     @Override
     public void initLayout(Stage stage) {
@@ -62,6 +68,8 @@ public class ScoreController extends AbstractController {
 
             stage.setScene(scene);
             stage.show();
+
+            this.stage = stage;
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -95,6 +103,9 @@ public class ScoreController extends AbstractController {
     }
 
 
+    public void restartButtonClicked(ActionEvent actionEvent) {
+        mainMenuController.initLayout(stage);
+    }
 
     public void setGameSession(GameSession gameSession) {
         this.gameSession = gameSession;

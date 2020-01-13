@@ -6,7 +6,8 @@
 
 <?import javafx.scene.control.ScrollPane?>
 <AnchorPane xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="mastermind.controller.BoardController">
-  <ScrollPane AnchorPane.leftAnchor="100.0"
+  <ScrollPane fx:id="pastGuessesScrollPane"
+              AnchorPane.leftAnchor="100.0"
               AnchorPane.rightAnchor="0.0"
               AnchorPane.topAnchor="0.0"
               AnchorPane.bottomAnchor="100.0"
@@ -23,7 +24,8 @@
     <fx:include fx:id="guess" source="GuessView.fxml" />
   </Pane>
   <!-- Dispenser pane has to be last, so that dragged pins are drawn above everything else -->
-  <Pane fx:id="dispenserPane">
+  <Pane fx:id="dispenserPane"
+        AnchorPane.bottomAnchor="0.0">
     <fx:include fx:id="dispenser" source="DispenserView.fxml" />
   </Pane>
 </AnchorPane>

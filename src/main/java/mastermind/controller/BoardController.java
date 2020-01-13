@@ -7,6 +7,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -40,6 +41,9 @@ public class BoardController extends AbstractController {
     private VBox pastGuesses;
 
     @FXML
+    private ScrollPane pastGuessesScrollPane;
+
+    @FXML
     private DispenserController dispenserController;
 
     @FXML
@@ -69,7 +73,8 @@ public class BoardController extends AbstractController {
             boardLoader.setLocation(Main.class.getResource("view/BoardView.fxml"));
 
             AnchorPane rootLayout = (AnchorPane) boardLoader.load();
-            rootLayout.setMinHeight(100 * gameSession.getDispenserHeight());
+            int minHeight = Math.max(100 * gameSession.getDispenserHeight(), 600);
+            rootLayout.setMinHeight(minHeight);
             rootLayout.setMinWidth(100 * (gameSession.getDispenserWidth() + gameSession.getGuessWordLength()));
 
             this.stage = primaryStage;
@@ -85,6 +90,7 @@ public class BoardController extends AbstractController {
     @FXML
     protected void initialize() {
         guessPane.setLayoutX(100 * gameSession.getDispenserWidth());
+        AnchorPane.setLeftAnchor(pastGuessesScrollPane, 100.0 * gameSession.getDispenserWidth());
 
         dispenserController.setGameSession(gameSession);
         guessController.setGameSession(gameSession);
@@ -112,12 +118,17 @@ public class BoardController extends AbstractController {
                 scoreController.setGameSession(gameSession);
                 if(gameSession.isGuessed()) {
                     try {
-                        Pair<User, Integer> best = sqliteDb.currentBest();
-                        Integer score = gameSession.getScore();
+                        int score = gameSession.getScore();
                         String name = gameSession.getName();
-                        if(score > best.getValue() && !name.equals(best.getKey().getName())) {
-                            mailService.sendMail(best.getKey().getEmail(), name, score);
+
+                        Pair<User, Integer> best = sqliteDb.currentBest();
+                        if (best != null) {
+                            User user = best.getKey();
+                            if(score > best.getValue() && !name.equals(user.getName())) {
+                                mailService.sendMail(user.getEmail(), name, score);
                         }
+                        }
+
                         sqliteDb.addScore(gameSession.getName(), score);
                         gameSession.setRanking(sqliteDb.getRanking());
                     } catch (SQLException e) { e.printStackTrace(); }

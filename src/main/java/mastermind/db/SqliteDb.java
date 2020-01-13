@@ -78,7 +78,7 @@ public class SqliteDb {
             res.add(new Pair<User, Integer>(new User(result.getString("gamer"), result.getString("e_mail")), result.getInt("score")));
         }
         result.close();
-        return res.stream().max(Comparator.comparing(Pair::getValue)).get();
+        return res.stream().max(Comparator.comparing(Pair::getValue)).orElse(null);
     }
 
 }
