@@ -1,5 +1,6 @@
 package mastermind.controller;
 
+import com.google.common.collect.Maps;
 import com.google.inject.Singleton;
 import javafx.fxml.FXML;
 import javafx.scene.layout.Pane;
@@ -10,6 +11,7 @@ import mastermind.model.GameSession;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 @Singleton
 public class DispenserController {
@@ -19,9 +21,23 @@ public class DispenserController {
 
     private int height = 8;
     private int width = 1;
+    private int colorCount;
 
     public static final ArrayList<Color> COLORS = new ArrayList<>(
             Arrays.asList(Color.BLUE, Color.FUCHSIA, Color.CYAN, Color.ORANGE, Color.PERU, Color.GREEN, Color.YELLOW, Color.RED, Color.DARKMAGENTA, Color.SIENNA)
+    );
+
+    public static final Map<Color, String> COLOR_NAME_MAP = Map.of(
+            Color.BLUE, "BLUE",
+            Color.FUCHSIA, "FUCHSIA",
+            Color.CYAN, "CYAN",
+            Color.ORANGE, "ORANGE",
+            Color.PERU, "PERU",
+            Color.GREEN, "GREEN",
+            Color.YELLOW, "YELLOW",
+            Color.RED, "RED",
+            Color.DARKMAGENTA, "DARKMAGENTA",
+            Color.SIENNA, "SIENNA"
     );
 
     private List<Circle> circles = new ArrayList<>();
@@ -37,13 +53,16 @@ public class DispenserController {
 
         for(int i = 0; i < width; i++) {
             for(int j = 0; j < height; j++) {
-                Circle circle = new Circle(30.0f, COLORS.get(i*width + j));
-                circle.setId("dispenser-" + i);
+                int colorIndex = i * height + j;
+                if (colorIndex < colorCount) {
+                    Circle circle = new Circle(30.0f, COLORS.get(colorIndex));
+                    circle.setId("dispenser-" + colorIndex);
                 circle.setCenterX(i * 100 + 50);
                 circle.setCenterY(j * 100 + 50);
                 dispenserPane.getChildren().add(circle);
                 circles.add(circle);
             }
+        }
         }
         dispenserPane.setPrefSize(width * 100, height * 100);
     }
@@ -51,6 +70,7 @@ public class DispenserController {
     public void setGameSession(GameSession gameSession) {
         height = gameSession.getDispenserHeight();
         width = gameSession.getDispenserWidth();
+        colorCount = gameSession.getColoursQuantity();
         populateDispenserPane();
     }
 

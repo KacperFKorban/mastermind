@@ -1,5 +1,10 @@
 package mastermind.model;
 
+import javafx.util.Pair;
+
+import java.awt.*;
+import java.util.List;
+
 public class GameSession {
 
     private String name;
@@ -8,11 +13,15 @@ public class GameSession {
     private int maxGuessQuantity;
     private boolean guessed;
     private int guessesMade;
+    private CodeWord solution;
+    private List<Pair<String, Integer>> ranking;
+
+    private int dispenserWidth;
 
     public GameSession(String name, int guessWordLength, int coloursQuantity, int maxGuessQuantity) {
         this.name = name;
         this.guessWordLength = guessWordLength;
-        this.coloursQuantity = coloursQuantity;
+        setColoursQuantity(coloursQuantity);
         this.maxGuessQuantity = maxGuessQuantity;
     }
 
@@ -26,6 +35,14 @@ public class GameSession {
 
     public void setColoursQuantity(int coloursQuantity) {
         this.coloursQuantity = coloursQuantity;
+
+        int maxHeight = 400;
+        if (coloursQuantity > maxHeight / 100) {
+            int h = maxHeight / 100;
+            dispenserWidth = (coloursQuantity + h - 1) / h; // Round up
+        } else {
+            dispenserWidth = 1;
+        }
     }
 
     public void setMaxGuessQuantity(int maxGuessQuantity) {
@@ -49,11 +66,11 @@ public class GameSession {
     }
 
     public int getDispenserWidth() {
-        return 1;
+        return dispenserWidth;
     }
 
     public int getDispenserHeight() {
-        return coloursQuantity;
+        return (coloursQuantity + dispenserWidth - 1) / dispenserWidth;
     }
 
     public boolean isGuessed() {
@@ -70,6 +87,22 @@ public class GameSession {
 
     public void setGuessesMade(int guessesMade) {
         this.guessesMade = guessesMade;
+    }
+
+    public CodeWord getSolution() {
+        return solution;
+    }
+
+    public void setSolution(CodeWord solution) {
+        this.solution = solution;
+    }
+
+    public List<Pair<String, Integer>> getRanking() {
+        return ranking;
+    }
+
+    public void setRanking(List<Pair<String, Integer>> ranking) {
+        this.ranking = ranking;
     }
 
     public Integer getScore() {

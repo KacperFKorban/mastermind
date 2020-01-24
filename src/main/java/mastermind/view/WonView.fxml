@@ -5,13 +5,24 @@
 <?import javafx.scene.text.Text?>
 <?import javafx.scene.image.Image?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="400.0" style="-fx-background-color: #ffffff" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="mastermind.controller.ScoreController">
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.Button?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="400.0" style="-fx-background-color: #ffffff" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="mastermind.controller.ScoreController">
     <children>
         <ImageView layoutX="100.0" layoutY="50.0">
             <Image requestedWidth="200.0" requestedHeight="200.0" url="http://pixelartmaker.com/art/424e4e678fbdeb2.png"/>
         </ImageView>
-        <Text text="Gratulacje!" layoutX="150.0" layoutY="300.0" strokeWidth="100.0" textAlignment="CENTER"/>
-        <Text text="Twój wynik to:" layoutX="150.0" layoutY="320.0" strokeWidth="100.0" textAlignment="CENTER"/>
+        <Text text="Congratulations!" layoutX="150.0" layoutY="300.0" strokeWidth="100.0" textAlignment="CENTER"/>
+        <Text text="Your Score:" layoutX="150.0" layoutY="320.0" strokeWidth="100.0" textAlignment="CENTER"/>
         <Text text="${controller.score}" layoutX="150.0" layoutY="340.0" strokeWidth="100.0" textAlignment="CENTER"/>
+        <TableView fx:id="rankingTable" layoutX="100.0" layoutY="375.0" prefWidth="200.0" prefHeight="200.0" BorderPane.alignment="CENTER">
+            <columns>
+                <TableColumn fx:id="nameColumn" prefWidth="100.0" text="Name" />
+                <TableColumn fx:id="scoreColumn" prefWidth="100.0" text="Score" />
+            </columns>
+        </TableView>
+        <Button text="Restart" layoutX="100.0" layoutY="600.0" onAction="#restartButtonClicked"/>
     </children>
 </AnchorPane>

@@ -4,6 +4,7 @@ import javafx.scene.paint.Color;
 import mastermind.controller.DispenserController;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class CodeWord {
     private List<Color> colors;
@@ -27,6 +28,7 @@ public class CodeWord {
             int color = random.nextInt(gameSession.getColoursQuantity());
             colors.add(DispenserController.COLORS.get(color));
         }
+        System.out.println(colors.stream().map(DispenserController.COLOR_NAME_MAP::get).collect(Collectors.toList()));
         return new CodeWord(colors);
     }
 

@@ -7,18 +7,20 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import javafx.util.Pair;
 import mastermind.Main;
-import mastermind.model.Board;
-import mastermind.model.CodeWord;
-import mastermind.model.GameSession;
-import mastermind.model.Guess;
+import mastermind.db.SqliteDb;
+import mastermind.model.*;
+import mastermind.service.MailService;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 @Singleton
 public class BoardController extends AbstractController {
@@ -39,12 +41,21 @@ public class BoardController extends AbstractController {
     private VBox pastGuesses;
 
     @FXML
+    private ScrollPane pastGuessesScrollPane;
+
+    @FXML
     private DispenserController dispenserController;
 
     @FXML
     private GuessController guessController;
 
     private DragHandler dragHandler = new DragHandler();
+
+    @Inject
+    private SqliteDb sqliteDb;
+
+    @Inject
+    private MailService mailService;
 
     @Inject
     private FxmlLoaderFactory fxmlLoaderFactory;
@@ -55,12 +66,15 @@ public class BoardController extends AbstractController {
     @Override
     public void initLayout(Stage primaryStage) {
         try {
-            this.board = new Board(CodeWord.random(gameSession));
+            CodeWord solution = CodeWord.random(gameSession);
+            this.board = new Board(solution);
+            gameSession.setSolution(solution);
             FXMLLoader boardLoader = fxmlLoaderFactory.createFxmlLoader();
             boardLoader.setLocation(Main.class.getResource("view/BoardView.fxml"));
 
             AnchorPane rootLayout = (AnchorPane) boardLoader.load();
-            rootLayout.setMinHeight(100 * gameSession.getDispenserHeight());
+            int minHeight = Math.max(100 * gameSession.getDispenserHeight(), 600);
+            rootLayout.setMinHeight(minHeight);
             rootLayout.setMinWidth(100 * (gameSession.getDispenserWidth() + gameSession.getGuessWordLength()));
 
             this.stage = primaryStage;
@@ -76,20 +90,15 @@ public class BoardController extends AbstractController {
     @FXML
     protected void initialize() {
         guessPane.setLayoutX(100 * gameSession.getDispenserWidth());
+        AnchorPane.setLeftAnchor(pastGuessesScrollPane, 100.0 * gameSession.getDispenserWidth());
 
         dispenserController.setGameSession(gameSession);
         guessController.setGameSession(gameSession);
-
-        initBoard();
 
         dispenserController.setDragHandler(dragHandler);
         guessController.setDragHandler(dragHandler);
 
         guessController.setOnSubmit(this::guessSubmitted);
-    }
-
-    private void initBoard() {
-        board.setSolution(CodeWord.random(gameSession));
     }
 
     public GameSession getGameSession() {
@@ -107,6 +116,23 @@ public class BoardController extends AbstractController {
                 gameSession.setGuessed(guessController.getGuess().getCorrectPlace() == gameSession.getGuessWordLength());
                 gameSession.setGuessesMade(pastGuesses.getChildren().size());
                 scoreController.setGameSession(gameSession);
+                if(gameSession.isGuessed()) {
+                    try {
+                        int score = gameSession.getScore();
+                        String name = gameSession.getName();
+
+                        Pair<User, Integer> best = sqliteDb.currentBest();
+                        if (best != null) {
+                            User user = best.getKey();
+                            if(score > best.getValue() && !name.equals(user.getName())) {
+                                mailService.sendMail(user.getEmail(), name, score);
+                        }
+                        }
+
+                        sqliteDb.addScore(gameSession.getName(), score);
+                        gameSession.setRanking(sqliteDb.getRanking());
+                    } catch (SQLException e) { e.printStackTrace(); }
+                }
                 scoreController.initLayout(stage);
             }
             guessController.setGuess(new Guess(CodeWord.empty(gameSession.getGuessWordLength()), 0, 0));

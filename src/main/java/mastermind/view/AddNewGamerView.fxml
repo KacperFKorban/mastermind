@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<?import javafx.scene.text.Font?>
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2"
+            fx:controller="mastermind.controller.AddNewGamerController"
+            prefHeight="250.0" prefWidth="300.0">
+
+    <children>
+        <Button fx:id="addNewGamerButton" layoutX="100.0" layoutY="200.0" mnemonicParsing="false" text="Add new gamer" />
+        <Label alignment="CENTER" contentDisplay="CENTER" layoutX="50.0" layoutY="0.0" prefHeight="76.0" prefWidth="200.0" text="Master Mind" textAlignment="CENTER" textOverrun="ELLIPSIS" underline="false" wrapText="false">
+            <font>
+                <Font name="FreeSans" size="30.0" />
+            </font>
+        </Label>
+        <Label layoutX="50.0" layoutY="80.0" text="Enter name" />
+        <TextField fx:id="username" layoutX="50.0" layoutY="100.0" prefWidth="200.0" promptText="Name"/>
+        <Label layoutX="50.0" layoutY="130.0" text="Enter email" />
+        <TextField fx:id="email" layoutX="50.0" layoutY="150.0" prefWidth="200.0" promptText="E-mail"/>
+    </children>
+
+
+</AnchorPane>
